@@ -11,11 +11,11 @@ import lodash from 'lodash';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import PageTitle from './lib/components/PageTitle.vue';
-import ApiTable from './lib/components/ApiTable.vue';
-import ModelForm from './lib/components/ModelForm.vue';
-import ModelView from './lib/components/ModelView.vue';
-import './utils/axios-mock-adapter';
+import PageTitle from '../components/PageTitle.vue';
+import ApiTable from '../components/ApiTable.vue';
+import ModelForm from '../components/ModelForm.vue';
+import ModelView from '../components/ModelView.vue';
+import '../utils/axios-mock-adapter';
 
 window._ = lodash;
 

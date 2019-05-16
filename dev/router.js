@@ -26,10 +26,14 @@ export default new Router({
             {
               path: 'api-table',
               name: 'ApiTable',
-              component: () => import('./lib/components/ApiTable'),
+              component: () => import('../components/ApiTable'),
               props: {
 
               },
+            },
+            {
+              path: '',
+              redirect: 'api-table',
             },
           ],
         },

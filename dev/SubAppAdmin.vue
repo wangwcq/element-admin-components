@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import mixinAdmins from './lib/mixins/mixinAdmins';
+  import mixinAdmins from '../mixins/mixinAdmins';
 
   export default {
     name: 'SubAppAdmin',
