@@ -6,7 +6,9 @@
     "dev": "vue serve main.js",
     "go": "np --yolo"
   },
-  "contents": "lib",
+  "np": {
+    "contents": "lib"
+  },
   "dependencies": {
     "browser-csv-exporter": "^2.0.2",
     "vue-click-outside": "^1.0.7"
