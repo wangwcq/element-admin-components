@@ -1,0 +1,12 @@
+{
+  "name": "element-admin-components",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "go": "np --yolo"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "np": "^5.0.1"
+  }
+}
