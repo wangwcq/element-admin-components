@@ -24,6 +24,7 @@
     "moment": "^2.24.0",
     "np": "^5.0.1",
     "regenerator-runtime": "^0.13.2",
+    "uuid": "^3.3.2",
     "vue": "^2.6.10",
     "vue-meta": "^1.6.0",
     "vue-router": "^3.0.6",

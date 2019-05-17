@@ -124,6 +124,17 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage4"
+      :page-sizes="[10, 15, 20, 50, 100]"
+      :page-size="10"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="listFiltered.length"
+      style="text-align: center; margin-top: 8px;"
+    >
+    </el-pagination>
   </div>
 </template>
 
@@ -154,6 +165,8 @@ export default {
     genLinks: { type: Function, default: () => () => [] },
     resizable: { type: Boolean, default: false },
     transformListData: { type: Function, default: x => x },
+    currentPage: { type: Number, default: 1 },
+    singlePage: { type: Number, default: 10 },
   },
   data() {
     // eslint-disable-next-line no-nested-ternary
@@ -168,10 +181,16 @@ export default {
       searchStr: '',
       colWidth: {},
       defaultSortMethod,
+      vSinglePage: this.singlePage,
+      vCurrentPage: this.currentPage,
     };
   },
+  watch: {
+    singlePage(next) { this.vSinglePage = next; },
+    currentPage(next) { this.vCurrentPage = next; },
+  },
   computed: {
-    listDisplay() {
+    listFiltered() {
       if (!this.searchStr || !this.searchField) {
         return this.list;
       }
@@ -183,6 +202,14 @@ export default {
         x => _.toString(_.get(x, this.searchField)).toLowerCase()
           .indexOf(this.searchStr.toLowerCase()) !== -1,
       );
+    },
+    vTotalPages() {
+      return _.ceil(this.listFiltered.length / (this.vSinglePage || 1));
+    },
+    listDisplay() {
+      const start = (this.vCurrentPage - 1) * this.vSinglePage;
+      const end = start + this.vSinglePage;
+      return this.listFiltered.slice(start, end);
     },
   },
   mounted() {
@@ -284,8 +311,13 @@ export default {
       });
       exporter.export();
     },
+    handleSizeChange(v) {
+      this.vSinglePage = v;
+    },
+    handleCurrentChange(v) {
+      this.vCurrentPage = v;
+    },
   },
-
 };
 </script>
 

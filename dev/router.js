@@ -28,7 +28,51 @@ export default new Router({
               name: 'ApiTable',
               component: () => import('../components/ApiTable'),
               props: {
-
+                api: '/api/admin/api-table',
+                columns: [
+                  {
+                    name: '_id',
+                    title: 'ID',
+                    type: 'hidden',
+                  },
+                  {
+                    name: 'createdAt',
+                    title: 'Time',
+                    type: 'date',
+                  },
+                  {
+                    name: 'token',
+                    title: 'Token',
+                  },
+                  {
+                    name: 'ip',
+                    title: 'IP',
+                  },
+                  {
+                    name: 'scene',
+                    title: 'Scene',
+                    type: 'tag',
+                  },
+                  {
+                    name: 'contact',
+                    title: 'Contact',
+                    type: 'pre',
+                    className: 'normal',
+                    getData(row) {
+                      return [
+                        [
+                          _.get(row, 'request[0].firstName'),
+                          _.get(row, 'request[0].lastName'),
+                        ].filter(Boolean).join(' '),
+                        _.get(row, 'request[0].email'),
+                        [
+                          _.get(row, 'request[0].companyName'),
+                          _.get(row, 'request[0].role'),
+                        ].filter(Boolean).join(' - '),
+                      ].join('\n');
+                    },
+                  },
+                ],
               },
             },
             {

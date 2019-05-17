@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js add regenerator-runtime/runtime --dev
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js go
 
 PATH: 
   /Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages:/Applications/Wireshark.app/Contents/MacOS:/Applications/VMware Fusion.app/Contents/Public:/usr/local/aria2/bin:/Users/wangwcq/Library/Android/sdk/tools:/Users/wangwcq/Library/Android/sdk/platform-tools:/Users/wangwcq/flutter/bin
@@ -16,25 +16,48 @@ Platform:
 npm manifest: 
   {
     "name": "element-admin-components",
-    "version": "0.1.0",
+    "version": "0.3.0",
     "private": true,
     "scripts": {
+      "dev": "vue serve dev/main.js",
       "go": "np --yolo"
     },
-    "contents": "components",
+    "np": {
+      "contents": "lib"
+    },
     "dependencies": {
-      "browser-csv-exporter": "^2.0.2"
+      "browser-csv-exporter": "^2.0.2",
+      "vue-click-outside": "^1.0.7"
     },
     "devDependencies": {
       "@vue/cli-service": "^3.7.0",
+      "axios": "^0.18.0",
+      "axios-mock-adapter": "^1.16.0",
+      "element-ui": "^2.8.2",
+      "less": "^3.9.0",
+      "less-loader": "^5.0.0",
+      "lodash": "^4.17.11",
+      "moment": "^2.24.0",
       "np": "^5.0.1",
-      "vue-template-compiler": "^2.6.10"
+      "regenerator-runtime": "^0.13.2",
+      "uuid": "^3.3.2",
+      "vue": "^2.6.10",
+      "vue-meta": "^1.6.0",
+      "vue-router": "^3.0.6",
+      "vue-template-compiler": "^2.6.10",
+      "vuex": "^3.1.1"
     },
     "peerDependencies": {
       "axios": "^0.18.0",
-      "less-loader": "^5.0.0",
+      "element-ui": "^2.8.2",
+      "less": "^3.9.0",
+      "less-loader": "^4.1.0",
       "lodash": "^4.17.11",
-      "vue": "^2.6.10"
+      "moment": "^2.24.0",
+      "vue": "^2.6.10",
+      "vue-meta": "^1.5.8",
+      "vue-router": "^3.0.1",
+      "vuex": "^3.0.1"
     }
   }
 
@@ -538,6 +561,10 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   
+  asap@~2.0.3:
+    version "2.0.6"
+    resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
+  
   asn1.js@^4.0.0:
     version "4.10.1"
     resolved "https://registry.yarnpkg.com/asn1.js/-/asn1.js-4.10.1.tgz#b9c2bf5805f1e64aadeed6df3a2bfafb5a73f5a0"
@@ -579,6 +606,12 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
   
+  async-validator@~1.8.1:
+    version "1.8.5"
+    resolved "https://registry.yarnpkg.com/async-validator/-/async-validator-1.8.5.tgz#dc3e08ec1fd0dddb67e60842f02c0cd1cec6d7f0"
+    dependencies:
+      babel-runtime "6.x"
+  
   async@^1.5.2:
     version "1.5.2"
     resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
@@ -610,6 +643,12 @@ Lockfile:
     version "1.8.0"
     resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
   
+  axios-mock-adapter@^1.16.0:
+    version "1.16.0"
+    resolved "https://registry.yarnpkg.com/axios-mock-adapter/-/axios-mock-adapter-1.16.0.tgz#cdd55bb60d8cb3fcd77fdb9cbb269e47b8b95180"
+    dependencies:
+      deep-equal "^1.0.1"
+  
   axios@^0.18.0:
     version "0.18.0"
     resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
@@ -624,6 +663,17 @@ Lockfile:
       chalk "^1.1.3"
       esutils "^2.0.2"
       js-tokens "^3.0.2"
+  
+  babel-helper-vue-jsx-merge-props@^2.0.0:
+    version "2.0.3"
+    resolved "https://registry.yarnpkg.com/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-2.0.3.tgz#22aebd3b33902328e513293a8e4992b384f9f1b6"
+  
+  babel-runtime@6.x:
+    version "6.26.0"
+    resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
+    dependencies:
+      core-js "^2.4.0"
+      regenerator-runtime "^0.11.0"
   
   balanced-match@^1.0.0:
     version "1.0.0"
@@ -1142,7 +1192,7 @@ Lockfile:
     version "1.0.4"
     resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   
-  clone@^2.1.1:
+  clone@^2.1.1, clone@^2.1.2:
     version "2.1.2"
     resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   
@@ -1328,6 +1378,10 @@ Lockfile:
       minimatch "^3.0.4"
       p-limit "^1.0.0"
       serialize-javascript "^1.4.0"
+  
+  core-js@^2.4.0:
+    version "2.6.5"
+    resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.5.tgz#44bc8d249e7fb2ff5d00e0341a7ffb94fbf67895"
   
   core-util-is@1.0.2, core-util-is@~1.0.0:
     version "1.0.2"
@@ -1662,9 +1716,13 @@ Lockfile:
     version "0.6.0"
     resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
   
-  deepmerge@^1.5.2:
+  deepmerge@^1.2.0, deepmerge@^1.5.2:
     version "1.5.2"
     resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-1.5.2.tgz#10499d868844cdad4fee0842df8c7f6f0c95a753"
+  
+  deepmerge@^3.2.0:
+    version "3.2.0"
+    resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-3.2.0.tgz#58ef463a57c08d376547f8869fdc5bcee957f44e"
   
   default-gateway@^4.2.0:
     version "4.2.0"
@@ -1881,6 +1939,17 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/elegant-spinner/-/elegant-spinner-1.0.1.tgz#db043521c95d7e303fd8f345bedc3349cfb0729e"
   
+  element-ui@^2.8.2:
+    version "2.8.2"
+    resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-2.8.2.tgz#21a7a4cb92616b0f8b75d4d4e637d3a1cd8c09de"
+    dependencies:
+      async-validator "~1.8.1"
+      babel-helper-vue-jsx-merge-props "^2.0.0"
+      deepmerge "^1.2.0"
+      normalize-wheel "^1.0.1"
+      resize-observer-polyfill "^1.5.0"
+      throttle-debounce "^1.0.1"
+  
   elliptic@^6.0.0:
     version "6.4.1"
     resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.4.1.tgz#c2d0b7776911b86722c632c3c06c60f2f819939a"
@@ -1923,7 +1992,7 @@ Lockfile:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
   
-  errno@^0.1.3, errno@~0.1.7:
+  errno@^0.1.1, errno@^0.1.3, errno@~0.1.7:
     version "0.1.7"
     resolved "https://registry.yarnpkg.com/errno/-/errno-0.1.7.tgz#4684d71779ad39af177e3f007996f7c67c852618"
     dependencies:
@@ -2787,6 +2856,10 @@ Lockfile:
     version "4.0.6"
     resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   
+  image-size@~0.5.0:
+    version "0.5.5"
+    resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.5.5.tgz#09dfd4ab9d20e29eb1c3e80b8990378df9e3cb9c"
+  
   import-cwd@^2.0.0:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/import-cwd/-/import-cwd-2.1.0.tgz#aa6cf36e722761285cb371ec6519f53e2435b0a9"
@@ -3349,6 +3422,21 @@ Lockfile:
       loader-utils "^1.1.0"
       pify "^4.0.1"
   
+  less@^3.9.0:
+    version "3.9.0"
+    resolved "https://registry.yarnpkg.com/less/-/less-3.9.0.tgz#b7511c43f37cf57dc87dffd9883ec121289b1474"
+    dependencies:
+      clone "^2.1.2"
+    optionalDependencies:
+      errno "^0.1.1"
+      graceful-fs "^4.1.2"
+      image-size "~0.5.0"
+      mime "^1.4.1"
+      mkdirp "^0.5.0"
+      promise "^7.1.1"
+      request "^2.83.0"
+      source-map "~0.6.0"
+  
   listr-input@^0.1.3:
     version "0.1.3"
     resolved "https://registry.yarnpkg.com/listr-input/-/listr-input-0.1.3.tgz#0c313967b6d179ebe964a81e9363ce2a5a39d25c"
@@ -3445,6 +3533,10 @@ Lockfile:
     version "4.6.0"
     resolved "https://registry.yarnpkg.com/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.0.tgz#bec1024f85b1bd96cbea405b23c14ad6443a6f81"
   
+  lodash.isplainobject@^4.0.6:
+    version "4.0.6"
+    resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
+  
   lodash.mapvalues@^4.6.0:
     version "4.6.0"
     resolved "https://registry.yarnpkg.com/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz#1bafa5005de9dd6f4f26668c30ca37230cc9689c"
@@ -3460,6 +3552,10 @@ Lockfile:
   lodash.uniq@^4.5.0:
     version "4.5.0"
     resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
+  
+  lodash.uniqueid@^4.0.1:
+    version "4.0.1"
+    resolved "https://registry.yarnpkg.com/lodash.uniqueid/-/lodash.uniqueid-4.0.1.tgz#3268f26a7c88e4f4b1758d679271814e31fa5b26"
   
   lodash.zip@^4.2.0:
     version "4.2.0"
@@ -3666,6 +3762,10 @@ Lockfile:
     version "1.4.1"
     resolved "https://registry.yarnpkg.com/mime/-/mime-1.4.1.tgz#121f9ebc49e3766f311a76e1fa1c8003c4b03aa6"
   
+  mime@^1.4.1:
+    version "1.6.0"
+    resolved "https://registry.yarnpkg.com/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
+  
   mime@^2.0.3, mime@^2.4.2:
     version "2.4.3"
     resolved "https://registry.yarnpkg.com/mime/-/mime-2.4.3.tgz#229687331e86f68924e6cb59e1cdd937f18275fe"
@@ -3775,6 +3875,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
     dependencies:
       minimist "0.0.8"
+  
+  moment@^2.24.0:
+    version "2.24.0"
+    resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   
   move-concurrently@^1.0.1:
     version "1.0.1"
@@ -3970,6 +4074,10 @@ Lockfile:
   normalize-url@^3.0.0, normalize-url@^3.1.0:
     version "3.3.0"
     resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
+  
+  normalize-wheel@^1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/normalize-wheel/-/normalize-wheel-1.0.1.tgz#aec886affdb045070d856447df62ecf86146ec45"
   
   np@^5.0.1:
     version "5.0.1"
@@ -4760,6 +4868,12 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   
+  promise@^7.1.1:
+    version "7.3.1"
+    resolved "https://registry.yarnpkg.com/promise/-/promise-7.3.1.tgz#064b72602b18f90f29192b8b1bc418ffd1ebd3bf"
+    dependencies:
+      asap "~2.0.3"
+  
   proxy-addr@~2.0.4:
     version "2.0.5"
     resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.5.tgz#34cbd64a2d81f4b1fd21e76f9f06c8a45299ee34"
@@ -4961,6 +5075,14 @@ Lockfile:
     version "1.4.0"
     resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
   
+  regenerator-runtime@^0.11.0:
+    version "0.11.1"
+    resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
+  
+  regenerator-runtime@^0.13.2:
+    version "0.13.2"
+    resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
+  
   regex-not@^1.0.0, regex-not@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/regex-not/-/regex-not-1.0.2.tgz#1f4ece27e00b0b65e0247a6810e6a85d83a5752c"
@@ -5045,7 +5167,7 @@ Lockfile:
       stealthy-require "^1.1.1"
       tough-cookie "^2.3.3"
   
-  request@^2.87.0:
+  request@^2.83.0, request@^2.87.0:
     version "2.88.0"
     resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
     dependencies:
@@ -5089,6 +5211,10 @@ Lockfile:
   requires-port@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+  
+  resize-observer-polyfill@^1.5.0:
+    version "1.5.1"
+    resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
   
   resolve-cwd@^2.0.0:
     version "2.0.0"
@@ -5810,6 +5936,10 @@ Lockfile:
       loader-utils "^1.1.0"
       neo-async "^2.6.0"
   
+  throttle-debounce@^1.0.1:
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-1.1.0.tgz#51853da37be68a155cb6e827b3514a3c422e89cd"
+  
   through2@^2.0.0:
     version "2.0.5"
     resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.5.tgz#01c1e39eb31d07cb7d03a96a70823260b23132cd"
@@ -6146,6 +6276,10 @@ Lockfile:
     dependencies:
       indexof "0.0.1"
   
+  vue-click-outside@^1.0.7:
+    version "1.0.7"
+    resolved "https://registry.yarnpkg.com/vue-click-outside/-/vue-click-outside-1.0.7.tgz#cdd2b1605e3c4944784e1794eae4a12a0f700bd6"
+  
   vue-hot-reload-api@^2.3.0:
     version "2.3.3"
     resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"
@@ -6159,6 +6293,19 @@ Lockfile:
       loader-utils "^1.1.0"
       vue-hot-reload-api "^2.3.0"
       vue-style-loader "^4.1.0"
+  
+  vue-meta@^1.6.0:
+    version "1.6.0"
+    resolved "https://registry.yarnpkg.com/vue-meta/-/vue-meta-1.6.0.tgz#89b664f6011a207e098e8ba3b9d32e29c819b65d"
+    dependencies:
+      deepmerge "^3.2.0"
+      lodash.isplainobject "^4.0.6"
+      lodash.uniqueid "^4.0.1"
+      object-assign "^4.1.1"
+  
+  vue-router@^3.0.6:
+    version "3.0.6"
+    resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.6.tgz#2e4f0f9cbb0b96d0205ab2690cfe588935136ac3"
   
   vue-style-loader@^4.1.0:
     version "4.1.2"
@@ -6181,6 +6328,10 @@ Lockfile:
   vue@^2.6.10:
     version "2.6.10"
     resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
+  
+  vuex@^3.1.1:
+    version "3.1.1"
+    resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.1.1.tgz#0c264bfe30cdbccf96ab9db3177d211828a5910e"
   
   watchpack@^1.5.0:
     version "1.6.0"
@@ -6483,23 +6634,16 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 128
-  Command: git
-  Arguments: ls-remote --tags --heads ssh://git@github.com/regenerator-runtime/runtime.git
+  Exit code: 1
+  Command: sh
+  Arguments: -c np --yolo
   Directory: /Users/wangwcq/element-admin-components
   Output:
-  git@github.com: Permission denied (publickey).
-  fatal: Could not read from remote repository.
   
-  Please make sure you have the correct access rights
-  and the repository exists.
       at ProcessTermError.MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
       at new ProcessTermError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:226:113)
       at ChildProcess.<anonymous> (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:30281:17)
       at emitTwo (events.js:126:13)
       at ChildProcess.emit (events.js:214:7)
       at maybeClose (internal/child_process.js:915:16)
-      at Socket.stream.socket.on (internal/child_process.js:336:11)
-      at emitOne (events.js:116:13)
-      at Socket.emit (events.js:211:7)
-      at Pipe._handle.close [as _onclose] (net.js:561:12)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
