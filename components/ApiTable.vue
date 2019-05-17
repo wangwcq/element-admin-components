@@ -307,7 +307,7 @@ export default {
       const exporter = new CSVExporter({
         fileName: `${this.$moment().format('YYYY-MM-DD')}`,
         columns,
-        data: this.listDisplay,
+        data: this.listFiltered,
       });
       exporter.export();
     },
