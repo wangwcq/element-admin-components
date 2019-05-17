@@ -127,7 +127,7 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
+      :current-page="currentPage"
       :page-sizes="[10, 15, 20, 50, 100]"
       :page-size="10"
       layout="total, sizes, prev, pager, next, jumper"
@@ -185,10 +185,6 @@ export default {
       vCurrentPage: this.currentPage,
     };
   },
-  watch: {
-    singlePage(next) { this.vSinglePage = next; },
-    currentPage(next) { this.vCurrentPage = next; },
-  },
   computed: {
     listFiltered() {
       if (!this.searchStr || !this.searchField) {
@@ -220,6 +216,9 @@ export default {
     version() {
       this.loadData();
     },
+    singlePage(next) { this.vSinglePage = next; },
+    currentPage(next) { this.vCurrentPage = next; },
+    listFiltered() { this.vCurrentPage = 1; },
   },
   methods: {
     async loadData() {

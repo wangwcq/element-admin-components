@@ -3,7 +3,7 @@
   "version": "0.4.1",
   "private": true,
   "scripts": {
-    "dev": "vue serve dev/main.js",
+    "dev": "vue serve dev/main.js --open",
     "go": "np --yolo"
   },
   "np": {
