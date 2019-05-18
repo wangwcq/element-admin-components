@@ -46,7 +46,7 @@
       },
     },
     beforeCreate() {
-      this.$ctx.apiBase = '/api/admin/open-api';
+      this.$ctx.apiBase = '/api/admin';
     },
     data() {
       const routes = _.clone(this.$route.matched);
