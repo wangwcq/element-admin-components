@@ -21,7 +21,7 @@
                   :model="field.reference"
                   :value="model[field.name]"
                   :field-title="field.fieldTitle"
-                  :do-link-to-entities="field.link"
+                  :do-link-to-entities="doLinkToEntities && field.link"
               ></reference-view>
               <template
                 v-else-if="field.type === 'price'"
@@ -75,6 +75,7 @@ export default {
     fields: { type: Array },
     cols: { type: Number, default: 2 },
     empty: { type: String, default: '---' },
+    doLinkToEntities: { type: Boolean, default: true },
   },
   events: ['submit'],
   components: {
