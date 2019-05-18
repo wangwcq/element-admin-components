@@ -59,6 +59,11 @@
                 title: this.$t('views.ModelForm.title'),
                 icon: 'el-icon-edit-outline',
               },
+              {
+                route: '/model-view',
+                title: this.$t('views.ModelView.title'),
+                icon: 'el-icon-edit-outline',
+              },
             ],
           },
         ]

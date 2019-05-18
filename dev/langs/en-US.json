@@ -27,6 +27,9 @@
     },
     "ApiTable": {
       "title": "ApiTable"
+    },
+    "ModelView": {
+      "title": "ModelView"
     }
   },
   "moduleApiTable": {

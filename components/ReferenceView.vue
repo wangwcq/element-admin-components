@@ -21,7 +21,7 @@ export default {
   emit: ['input'],
   data() {
     return {
-      vApi: this.api || `/api/admin/open-api/${this.model}/view`,
+      vApi: this.api || `${this.$ctx.apiBase}/${this.model}/view`,
       loading: false,
       data: {},
     };
@@ -42,6 +42,7 @@ export default {
         }
         this.data = data;
       } catch (e) {
+        console.error(`Retrieve reference value error with model ${this.model}`, e);
         this.data = {};
       }
       this.loading = false;

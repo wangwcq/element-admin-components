@@ -43,6 +43,12 @@ export default new Router({
               meta: { title: 'ModelForm', titleKey: 'ModelForm' },
             },
             {
+              path: 'model-view',
+              name: 'ModelView',
+              component: () => import('./views/ModelViewView'),
+              meta: { title: 'ModelView', titleKey: 'ModelView' },
+            },
+            {
               path: '',
               redirect: 'api-table',
             },

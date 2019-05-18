@@ -36,6 +36,11 @@
                   v-html="model[field.name]"
                   :class="field.className"
               ></pre>
+              <div
+                  v-else-if="field.type === 'htmleditor'"
+                  v-html="model[field.name]"
+                  :class="field.className"
+              ></div>
               <el-tag
                 v-else-if="field.type === 'select'"
                 :type="objGet(field.themes, objGet(model, field.name), 'primary')"

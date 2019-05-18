@@ -153,6 +153,7 @@
     </div>
     <el-form-item v-if="!readonly && submitText">
       <el-button :class="btnClass" type="primary" @click="onSubmitForm">{{submitText}}</el-button>
+      <slot name="buttons"></slot>
     </el-form-item>
   </el-form>
 </template>

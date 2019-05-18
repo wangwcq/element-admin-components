@@ -61,3 +61,8 @@ mock.onGet('/api/admin/categories/list').reply(200, {
   ],
 });
 
+mock.onGet('/api/admin/categories/view/20').reply(200, {
+  code: 0,
+  data: { id: 20, title: 'News' },
+});
+
