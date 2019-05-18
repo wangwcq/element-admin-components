@@ -2,9 +2,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import moment from "moment/moment";
 import ClickOutside from "vue-click-outside";
-import Vue from 'vue';
 import VueI18n from 'vue-i18n';
-import logger from './logger';
 
 import PageTitle from './components/PageTitle';
 import ApiTable from './components/ApiTable';
@@ -53,7 +51,6 @@ const ElementAdminComponents = {
     Vue.moment = moment;
     Vue.prototype.$axios = axios;
     Vue.prototype.$moment = moment;
-    Vue.prototype.$logger = logger;
   },
   i18n: (userOptions = {}) => {
     const options = _.merge({
