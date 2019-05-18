@@ -24,116 +24,23 @@ export default new Router({
           component: () => import('./SubAppAdmin'),
           meta: {
             appTitle: 'Components',
-          },
-          props: {
-            menuItems: [
-              {
-                groupTitle: 'Components',
-                children: [
-                  {
-                    route: '/api-table',
-                    title: 'ApiTable',
-                    icon: 'el-icon-s-grid',
-                  },
-                  {
-                    route: '/model-form',
-                    title: 'ModelForm',
-                    icon: 'el-icon-edit-outline',
-                  },
-                ],
-              },
-            ],
+            appTitleKey: 'app',
           },
           children: [
             {
               path: 'api-table',
               name: 'ApiTable',
-              component: () => import('../components/ApiTable'),
+              component: () => import('./views/ApiTableView'),
               meta: {
-                title: 'ApiTable'
-              },
-              props: {
-                api: '/api/admin/api-table',
-                columns: [
-                  {
-                    name: '_id',
-                    title: 'ID',
-                    type: 'hidden',
-                  },
-                  {
-                    name: 'createdAt',
-                    title: 'Time',
-                    type: 'date',
-                  },
-                  {
-                    name: 'token',
-                    title: 'Token',
-                  },
-                  {
-                    name: 'ip',
-                    title: 'IP',
-                  },
-                  {
-                    name: 'scene',
-                    title: 'Scene',
-                    type: 'tag',
-                  },
-                  {
-                    name: 'contact',
-                    title: 'Contact',
-                    type: 'pre',
-                    className: 'normal',
-                    getData(row) {
-                      return [
-                        [
-                          _.get(row, 'request[0].firstName'),
-                          _.get(row, 'request[0].lastName'),
-                        ].filter(Boolean).join(' '),
-                        _.get(row, 'request[0].email'),
-                        [
-                          _.get(row, 'request[0].companyName'),
-                          _.get(row, 'request[0].role'),
-                        ].filter(Boolean).join(' - '),
-                      ].join('\n');
-                    },
-                  },
-                ],
+                title: 'ApiTable',
+                titleKey: 'ApiTable',
               },
             },
             {
               path: 'model-form',
               name: 'ModelForm',
-              component: () => import('../components/ModelForm'),
-              meta: { title: 'ModelForm' },
-              props: {
-                model: {
-                  id: 1,
-                  title: 'Test article',
-                  type: 'article',
-                  category: 20,
-                },
-                fields: [
-                  {
-                    name: 'title',
-                    title: 'Title',
-                  },
-                  {
-                    name: 'type',
-                    title: 'Type',
-                    type: 'select',
-                    options: {
-                      article: 'Article',
-                      file: 'File',
-                    },
-                  },
-                  {
-                    name: 'category',
-                    title: 'category',
-                    type: 'reference',
-                    reference: 'categories',
-                  },
-                ],
-              },
+              component: () => import('./views/ModelFormView'),
+              meta: { title: 'ModelForm', titleKey: 'ModelForm' },
             },
             {
               path: '',

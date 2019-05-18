@@ -14,14 +14,14 @@
         <el-upload
           multiple
           drag
-          action="/api/admin/landing-page/upload-asset-oss"
+          :action="$ctx.apiUpload"
           :data="{ transform: 'th1000' }"
           :show-file-list="false"
           with-credentials
           :on-success="handleUploadSuccess"
         >
           <div style="padding: 20px 0">
-            <p>Click or drag files here to upload</p>
+            <p>{{$t('uploadComponent.hint')}}</p>
           </div>
         </el-upload>
       </el-col>
@@ -38,7 +38,10 @@ const ckEditorImpl = true;
 
 export default {
   name: 'AdminEditor',
-  props: ['value'],
+  props: {
+    value: { type: String, default: '' },
+  },
+  emits: ['input'],
   data() {
     const ckReady = ckEditorReady || false;
     const ckImpl = ckEditorImpl || null;
@@ -53,8 +56,23 @@ export default {
       editorKey,
     };
   },
-  mounted() {
-    this.initCkEditor();
+  metaInfo: {
+    script: [
+      { src: '/ckeditor/ckeditor.js' },
+    ],
+  },
+  async mounted() {
+    await new Promise((resolve) => {
+      const tStart = Date.now();
+      const ti = setInterval(() => {
+        if (window.CKEDITOR) resolve();
+        const t = Date.now() - tStart;
+        if (t > 30 * 1000) clearInterval(ti);
+      }, 100);
+    });
+    this.$nextTick(() => {
+      this.initCkEditor();
+    });
   },
   methods: {
     initCkEditor() {

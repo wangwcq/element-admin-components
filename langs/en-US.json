@@ -1,0 +1,22 @@
+{
+  "listTable": {
+    "buttons": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "add": "Add",
+      "view": "View",
+      "links": "Links"
+    },
+    "columns": {
+      "action": "Action"
+    }
+  },
+  "uploadComponent": {
+    "hint": "Click or drag files here to upload"
+  },
+  "modelForm": {
+    "buttons": {
+      "save": "Save"
+    }
+  }
+}

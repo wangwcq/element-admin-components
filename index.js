@@ -2,6 +2,8 @@ import _ from 'lodash';
 import axios from 'axios';
 import moment from "moment/moment";
 import ClickOutside from "vue-click-outside";
+import Vue from 'vue';
+import VueI18n from 'vue-i18n';
 
 import PageTitle from './components/PageTitle';
 import ApiTable from './components/ApiTable';
@@ -11,8 +13,14 @@ import ModelView from './components/ModelView';
 const ElementAdminComponents = {
   install: (Vue, userOptions = {}) => {
     const options = _.merge({
-      apiBase: '/api/',
+      apiBase: '/api/admin',
+      apiUpload: '/api/upload',
+      appTitleKey: 'Admin',
     }, userOptions);
+
+    const {
+      ...ctx
+    } = options;
 
     Vue.directive('click-outside', ClickOutside);
 
@@ -33,8 +41,10 @@ const ElementAdminComponents = {
       },
     });
 
+    Vue.use(VueI18n);
+
     Vue.prototype.$ctx = {
-      apiBase: options.apiBase,
+      ...ctx
     };
     Vue._ = _;
     Vue.prototype.$lodash = _;
@@ -42,6 +52,20 @@ const ElementAdminComponents = {
     Vue.moment = moment;
     Vue.prototype.$axios = axios;
     Vue.prototype.$moment = moment;
+  },
+  i18n: (userOptions = {}) => {
+    const options = _.merge({
+      locale: 'zh-CN',
+    }, userOptions);
+    const i18n = new VueI18n({
+      locale: options.locale || 'zh-CN',
+      fallbackLocale: 'en',
+      messages: {
+        'zh-CN': _.merge(require('./langs/zh-CN.json'), _.get(options, ['messages', ['zh-CN']])),
+        'en-US': _.merge(require('./langs/en-US.json'), _.get(options, ['messages', ['en-US']])),
+      },
+    });
+    return i18n;
   },
 };
 

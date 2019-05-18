@@ -1,0 +1,22 @@
+{
+  "listTable": {
+    "buttons": {
+      "edit": "编辑",
+      "delete": "删除",
+      "add": "创建",
+      "view": "查看",
+      "links": "相关链接"
+    },
+    "columns": {
+      "action": "操作"
+    }
+  },
+  "uploadComponent": {
+    "hint": "点击此处或拖入文件上传"
+  },
+  "modelForm": {
+    "buttons": {
+      "save": "保存"
+    }
+  }
+}

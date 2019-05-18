@@ -54,7 +54,11 @@
       appTitle() {
         const r = _.find(this.$route.matched, x => x.meta && x.meta.appTitle);
         if (!r) return '';
-        return r.meta.appTitle || '';
+        let title = r.meta.appTitle || '';
+        if (r.meta.appTitleKey) {
+          title = this.$t(`app.${r.meta.appTitleKey}.title`);
+        }
+        return title;
       },
     },
     methods: {

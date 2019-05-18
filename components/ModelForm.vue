@@ -108,6 +108,10 @@
               :value="value"
             />
           </el-select>
+          <admin-editor
+              v-else-if="field.type === 'htmleditor'"
+              v-model="model[field.name]"
+          />
           <div
             v-else-if="field.type === 'repeated'"
           >
@@ -157,15 +161,18 @@
 import _ from 'lodash';
 import ReferenceSelect from './ReferenceSelect.vue';
 import TimeRangePicker from './TimeRangePicker.vue';
+import AdminEditor from "./AdminEditor.vue";
 
 export default {
   name: 'ModelForm',
-  components: { TimeRangePicker, ReferenceSelect },
+  components: {AdminEditor, TimeRangePicker, ReferenceSelect },
   props: {
     model: { type: Object },
     fields: { type: Array },
     readonly: { type: Boolean, default: false },
-    submitText: { type: String, default: 'Save' },
+    submitText: { type: String, default() {
+      return this.$t('modelForm.buttons.save');
+    }},
     labelPosition: { type: String, default: 'right' }, // Options: right, top
     hideLabel: { type: Boolean, default: false },
     btnClass: { type: String, default: '' },

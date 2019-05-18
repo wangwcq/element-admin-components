@@ -1,0 +1,42 @@
+{
+  "moduleModelForm": {
+    "title": "数据表单",
+    "fields": {
+      "": "",
+      "title": "标题",
+      "category": "分类",
+      "content": "内容",
+      "typeOptions": {
+        "article": "文章",
+        "file": "文件"
+      },
+      "type": "类型"
+    }
+  },
+  "app": {
+    "app": {
+      "title": "ElementUI 管理员通用组件库",
+      "groups": {
+        "Components": "组件"
+      }
+    }
+  },
+  "views": {
+    "ModelForm": {
+      "title": "ModelForm 数据表单"
+    },
+    "ApiTable": {
+      "title": "ApiTable 列表表格"
+    }
+  },
+  "moduleApiTable": {
+    "columns": {
+      "time": "时间",
+      "": "",
+      "token": "令牌",
+      "ip": "IP地址",
+      "scene": "场景",
+      "contact": "联系方式"
+    }
+  }
+}

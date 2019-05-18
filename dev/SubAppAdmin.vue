@@ -25,7 +25,6 @@
       </el-menu>
     </el-aside>
     <el-main>
-      <page-title :title="title" />
       <router-view />
     </el-main>
   </el-container>
@@ -39,12 +38,6 @@
     mixins: [
       mixinAdmins,
     ],
-    props: {
-      menuItems: {
-        type: Array,
-        default: () => [],
-      },
-    },
     beforeCreate() {
       this.$ctx.apiBase = '/api/admin';
     },
@@ -52,7 +45,23 @@
       const routes = _.clone(this.$route.matched);
       return {
         isCollapse: false,
-        title: _.get(_.find(_.reverse(routes), x => _.get(x, 'meta.title')), [0, 'meta', 'title']),
+        menuItems: [
+          {
+            groupTitle: this.$t('app.app.groups.Components'),
+            children: [
+              {
+                route: '/api-table',
+                title: this.$t('views.ApiTable.title'),
+                icon: 'el-icon-s-grid',
+              },
+              {
+                route: '/model-form',
+                title: this.$t('views.ModelForm.title'),
+                icon: 'el-icon-edit-outline',
+              },
+            ],
+          },
+        ]
       };
     },
   };

@@ -1,11 +1,11 @@
 <template>
   <div class="table-admin-actions">
-    <el-button v-if="viewAction" type="primary" size="small" @click="onView">View</el-button>
-    <el-button v-if="editAction" type="primary" size="small" @click="onEdit">Edit</el-button>
-    <el-button v-if="deleteAction" type="default" size="small" @click="onDelete">Delete</el-button>
+    <el-button v-if="viewAction" type="primary" size="small" @click="onView">{{$t('listTable.buttons.view')}}</el-button>
+    <el-button v-if="editAction" type="primary" size="small" @click="onEdit">{{$t('listTable.buttons.edit')}}</el-button>
+    <el-button v-if="deleteAction" type="default" size="small" @click="onDelete">{{$t('listTable.buttons.delete')}}</el-button>
     <el-dropdown v-if="links.length" @command="handleLinks">
       <el-button type="default" size="small">
-        Links
+        {{$t('listTable.buttons.link')}}
         <i class="el-icon-arrow-down el-icon--right" />
       </el-button>
       <el-dropdown-menu slot="dropdown">

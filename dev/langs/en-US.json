@@ -1,0 +1,42 @@
+{
+  "moduleModelForm": {
+    "title": "ModelForm",
+    "fields": {
+      "": "",
+      "title": "Title",
+      "category": "Category",
+      "content": "Content",
+      "typeOptions": {
+        "article": "Article",
+        "file": "File"
+      },
+      "type": "Type"
+    }
+  },
+  "app": {
+    "app": {
+      "title": "Element Admin Components",
+      "groups": {
+        "Components": "Components"
+      }
+    }
+  },
+  "views": {
+    "ModelForm": {
+      "title": "ModelForm"
+    },
+    "ApiTable": {
+      "title": "ApiTable"
+    }
+  },
+  "moduleApiTable": {
+    "columns": {
+      "time": "Time",
+      "": "",
+      "token": "Token",
+      "ip": "IP",
+      "scene": "scene",
+      "contact": "Contact"
+    }
+  }
+}

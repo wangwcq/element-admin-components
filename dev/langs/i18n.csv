@@ -1,0 +1,19 @@
+key,en-US,zh-CN
+moduleModelForm.title,ModelForm,数据表单
+app.app.title,Element Admin Components,ElementUI 管理员通用组件库
+views.ModelForm.title,ModelForm,ModelForm 数据表单
+views.ApiTable.title,ApiTable,ApiTable 列表表格
+moduleApiTable.columns.time,Time,时间
+moduleApiTable.columns.,,
+moduleApiTable.columns.token,Token,令牌
+moduleApiTable.columns.ip,IP,IP地址
+moduleApiTable.columns.scene,scene,场景
+moduleApiTable.columns.contact,Contact,联系方式
+app.app.groups.Components,Components,组件
+moduleModelForm.fields.,,
+moduleModelForm.fields.title,Title,标题
+moduleModelForm.fields.category,Category,分类
+moduleModelForm.fields.content,Content,内容
+moduleModelForm.fields.typeOptions.article,Article,文章
+moduleModelForm.fields.type,Type,类型
+moduleModelForm.fields.typeOptions.file,File,文件

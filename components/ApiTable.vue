@@ -109,7 +109,7 @@
       <el-table-column
         v-if="crudActions"
         :prop="primaryKeyNameData"
-        label="Actions"
+        :label="$t('listTable.columns.action')"
         :min-width="180"
       >
         <template slot-scope="scope">
@@ -143,9 +143,14 @@ import _ from 'lodash';
 import CSVExporter from 'browser-csv-exporter';
 import AdminActions from './AdminActions.vue';
 
+import testMixin from './test-mixin'; // todo
+
 export default {
   name: 'ApiTable',
   components: { AdminActions },
+  mixins: [
+    testMixin, // todo
+  ],
   props: {
     api: { type: String },
     apiMethod: { type: String, default: 'get' },
@@ -171,6 +176,7 @@ export default {
   data() {
     // eslint-disable-next-line no-nested-ternary
     const defaultSortMethod = ((a, b) => ((String(a) === String(b) ? 0 : (a < b ? -1 : 1))));
+    console.log(this.foo); // todo
     return {
       list: [],
       columnsData: [],
