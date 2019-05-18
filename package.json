@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "browser-csv-exporter": "^2.0.2",
-    "d3-dsv": "^1.1.1",
     "vue-click-outside": "^1.0.7"
   },
   "devDependencies": {
+    "d3-dsv": "^1.1.1",
     "@vue/cli-service": "^3.7.0",
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.16.0",
