@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js go
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js run dev
 
 PATH: 
   /Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages:/Applications/Wireshark.app/Contents/MacOS:/Applications/VMware Fusion.app/Contents/Public:/usr/local/aria2/bin:/Users/wangwcq/Library/Android/sdk/tools:/Users/wangwcq/Library/Android/sdk/platform-tools:/Users/wangwcq/flutter/bin
@@ -16,10 +16,10 @@ Platform:
 npm manifest: 
   {
     "name": "element-admin-components",
-    "version": "0.3.0",
+    "version": "0.4.2",
     "private": true,
     "scripts": {
-      "dev": "vue serve dev/main.js",
+      "dev": "vue serve dev/main.js --open",
       "go": "np --yolo"
     },
     "np": {
@@ -6636,7 +6636,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c np --yolo
+  Arguments: -c vue serve dev/main.js --open
   Directory: /Users/wangwcq/element-admin-components
   Output:
   

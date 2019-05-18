@@ -44,7 +44,7 @@ export default {
   emit: ['input'],
   data() {
     return {
-      vApi: this.api || `/api/admin/open-api/${this.model}/list`,
+      vApi: this.api || `${this.$ctx.apiBase}/${this.model}/list`,
       options: [],
       loading: false,
     };

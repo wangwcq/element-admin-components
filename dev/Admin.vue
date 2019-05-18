@@ -8,10 +8,7 @@
               <i class="el-icon-s-grid" />
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="/admin/open-api">OpenAPI</el-dropdown-item>
-              <el-dropdown-item command="/admin/landing-page">Landing Page</el-dropdown-item>
-              <el-dropdown-item command="/admin/ami-home">AMI Home</el-dropdown-item>
-              <el-dropdown-item command="/admin/kms">Knowledge Management System</el-dropdown-item>
+              <el-dropdown-item command="/">Components</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           {{appTitle}}
@@ -33,7 +30,7 @@
     </el-header>
     <router-view />
     <el-footer height="45px" class="footer">
-      &copy;{{year}} MioTech
+      &copy;{{year}} Chris Wang
     </el-footer>
   </el-container>
 
@@ -57,7 +54,6 @@
       appTitle() {
         const r = _.find(this.$route.matched, x => x.meta && x.meta.appTitle);
         if (!r) return '';
-        console.log(r);
         return r.meta.appTitle || '';
       },
     },

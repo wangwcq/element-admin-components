@@ -22,11 +22,36 @@ export default new Router({
           path: '',
           name: 'Admin',
           component: () => import('./SubAppAdmin'),
+          meta: {
+            appTitle: 'Components',
+          },
+          props: {
+            menuItems: [
+              {
+                groupTitle: 'Components',
+                children: [
+                  {
+                    route: '/api-table',
+                    title: 'ApiTable',
+                    icon: 'el-icon-s-grid',
+                  },
+                  {
+                    route: '/model-form',
+                    title: 'ModelForm',
+                    icon: 'el-icon-edit-outline',
+                  },
+                ],
+              },
+            ],
+          },
           children: [
             {
               path: 'api-table',
               name: 'ApiTable',
               component: () => import('../components/ApiTable'),
+              meta: {
+                title: 'ApiTable'
+              },
               props: {
                 api: '/api/admin/api-table',
                 columns: [
@@ -71,6 +96,41 @@ export default new Router({
                         ].filter(Boolean).join(' - '),
                       ].join('\n');
                     },
+                  },
+                ],
+              },
+            },
+            {
+              path: 'model-form',
+              name: 'ModelForm',
+              component: () => import('../components/ModelForm'),
+              meta: { title: 'ModelForm' },
+              props: {
+                model: {
+                  id: 1,
+                  title: 'Test article',
+                  type: 'article',
+                  category: 20,
+                },
+                fields: [
+                  {
+                    name: 'title',
+                    title: 'Title',
+                  },
+                  {
+                    name: 'type',
+                    title: 'Type',
+                    type: 'select',
+                    options: {
+                      article: 'Article',
+                      file: 'File',
+                    },
+                  },
+                  {
+                    name: 'category',
+                    title: 'category',
+                    type: 'reference',
+                    reference: 'categories',
                   },
                 ],
               },

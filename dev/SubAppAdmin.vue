@@ -7,18 +7,25 @@
           :collapse="isCollapse"
       >
         <el-menu-item-group
-            title="Components"
+            v-for="group in menuItems"
+            :key="group.groupTitle"
+            :title="group.groupTitle"
         >
           <el-menu-item
-              index="/api-table"
+              v-for="item in group.children"
+              :key="item.route"
+              :index="item.route"
           >
-            <i class="el-icon-user" />
-            <span slot="title">ApiTable</span>
+            <i :class="item.icon" />
+            <span slot="title">
+              {{item.title}}
+            </span>
           </el-menu-item>
         </el-menu-item-group>
       </el-menu>
     </el-aside>
     <el-main>
+      <page-title :title="title" />
       <router-view />
     </el-main>
   </el-container>
@@ -32,17 +39,21 @@
     mixins: [
       mixinAdmins,
     ],
-    async beforeCreate() {
-      window.webSettings = {};
-      let webSettings = {};
-      try {
-        let { data: res } = await this.$axios.get('/api/admin/landing-page/web-settings');
-        if (res.code !== 0) throw new Error('');
-        webSettings = res.data;
-      } catch (e) {
-        webSettings = {};
-      }
-      window.webSettings = webSettings;
+    props: {
+      menuItems: {
+        type: Array,
+        default: () => [],
+      },
+    },
+    beforeCreate() {
+      this.$ctx.apiBase = '/api/admin/open-api';
+    },
+    data() {
+      const routes = _.clone(this.$route.matched);
+      return {
+        isCollapse: false,
+        title: _.get(_.find(_.reverse(routes), x => _.get(x, 'meta.title')), [0, 'meta', 'title']),
+      };
     },
   };
 </script>

@@ -53,3 +53,11 @@ mock.onGet('/api/admin/api-table').reply(200, {
   }),
 });
 
+mock.onGet('/api/admin/categories/list').reply(200, {
+  code: 0,
+  data: [
+    { id: 1, title: 'About' },
+    { id: 20, title: 'News' },
+  ],
+});
+
