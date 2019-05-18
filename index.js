@@ -36,7 +36,12 @@ const ElementAdminComponents = {
     Vue.prototype.$ctx = {
       apiBase: options.apiBase,
     };
+    Vue._ = _;
+    Vue.prototype.$lodash = _;
+    Vue.axios = axios;
+    Vue.moment = moment;
     Vue.prototype.$axios = axios;
+    Vue.prototype.$moment = moment;
   },
 };
 
