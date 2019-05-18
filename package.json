@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "browser-csv-exporter": "^2.0.2",
+    "pino": "^5.12.5",
+    "pino-pretty": "^3.0.0",
     "vue-click-outside": "^1.0.7"
   },
   "devDependencies": {
@@ -27,8 +29,6 @@
     "moment": "^2.24.0",
     "nodemon": "^1.19.0",
     "np": "^5.0.1",
-    "pino": "^5.12.5",
-    "pino-pretty": "^3.0.0",
     "regenerator-runtime": "^0.13.2",
     "uuid": "^3.3.2",
     "vue": "^2.6.10",
