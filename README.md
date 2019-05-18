@@ -1,5 +1,17 @@
 # element-admin-components
 
+# Install
+
+```shell
+yarn install
+```
+
+# Upgrade
+
+```shell
+yarn upgrade --scope @wangwcq
+```
+
 ## Todo
 
 - import lodash in components
