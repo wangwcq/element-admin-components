@@ -39,6 +39,7 @@
               title: this.$t('moduleModelForm.fields.category'),
               type: 'reference',
               reference: 'categories',
+              link: false,
             },
             {
               name: 'content',

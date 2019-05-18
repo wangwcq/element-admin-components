@@ -21,6 +21,7 @@
                   :model="field.reference"
                   :value="model[field.name]"
                   :field-title="field.fieldTitle"
+                  :do-link-to-entities="field.link"
               ></reference-view>
               <template
                 v-else-if="field.type === 'price'"

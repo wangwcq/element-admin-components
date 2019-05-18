@@ -1,10 +1,14 @@
 <template>
   <div v-loading="loading">
     <router-link
+        v-if="doLinkToEntities"
         :to="`/admin/${this.model}/view/${data.id}`"
     >
       {{data[fieldTitle]}}
     </router-link>
+    <template v-else>
+      {{data[fieldTitle]}}
+    </template>
   </div>
 </template>
 
@@ -17,6 +21,7 @@ export default {
     value: {},
     fieldValue: { type: String, default: 'id' },
     fieldTitle: { type: String, default: 'title' },
+    doLinkToEntities: { type: Boolean, default: true },
   },
   emit: ['input'],
   data() {
