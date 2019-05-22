@@ -19,6 +19,7 @@
             type: 'article',
             category: 20,
             content: '<em>HTML</em>',
+            cover: 'https://picsum.photos/200',
           },
           fields: [
             {
@@ -45,6 +46,11 @@
               name: 'content',
               title: this.$t('moduleModelForm.fields.content'),
               type: 'htmleditor',
+            },
+            {
+              name: 'cover',
+              title: this.$t('moduleModelForm.fields.cover'),
+              type: 'thumbnail',
             },
           ],
         },

@@ -10,7 +10,8 @@
         "article": "Article",
         "file": "File"
       },
-      "type": "Type"
+      "type": "Type",
+      "cover": "Cover"
     }
   },
   "app": {

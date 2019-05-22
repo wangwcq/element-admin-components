@@ -18,3 +18,4 @@ moduleModelForm.fields.typeOptions.article,Article,文章
 moduleModelForm.fields.type,Type,类型
 moduleModelForm.fields.typeOptions.file,File,文件
 views.ModelView.title,ModelView,ModelView 查看数据
+moduleModelForm.fields.cover,Cover,封面

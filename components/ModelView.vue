@@ -53,6 +53,19 @@
               <template v-else-if="field.type === 'custom'">
                 {{(field.getData && field.getData(model)) || model[field.name] || empty}}
               </template>
+              <el-link
+                  v-else-if="field.type === 'thumbnail'"
+                  :href="objGet(model, field.name)"
+                  target="_blank"
+                  :underline="false"
+              >
+                <el-image
+                    style="width: 80px; height: 80px; border-radius: 5px; overflow: hidden;"
+                    :src="objGet(model, field.name)"
+                    fit="cover"
+                    lazy
+                />
+              </el-link>
               <template v-else>
                 {{model[field.name] || empty}}
               </template>
