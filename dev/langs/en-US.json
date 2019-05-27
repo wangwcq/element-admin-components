@@ -11,7 +11,8 @@
         "file": "File"
       },
       "type": "Type",
-      "cover": "Cover"
+      "cover": "Cover",
+      "time": "Time"
     }
   },
   "app": {

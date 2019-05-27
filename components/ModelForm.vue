@@ -45,6 +45,7 @@
             v-model="model[field.name]"
             type="datetime"
             :placeholder="(hideLabel && field.title) || ''"
+            :editable="defaultValue(field.editable, true)"
           />
           <time-range-picker
             v-else-if="field.type === 'timerange'"

@@ -16,6 +16,7 @@
           model: {
             id: 1,
             title: '',
+            time: Date.now(),
             type: 'article',
             category: 20,
           },
@@ -23,6 +24,12 @@
             {
               name: 'title',
               title: this.$t('moduleModelForm.fields.title')
+            },
+            {
+              name: 'time',
+              title: this.$t('moduleModelForm.fields.time'),
+              type: 'datetime',
+              editable: false,
             },
             {
               name: 'type',
