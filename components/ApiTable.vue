@@ -23,118 +23,120 @@
         </div>
       </div>
     </el-row>
-    <el-table
-      v-loading="loading"
-      :data="listDisplay"
-      :class="tableClassNames"
-      :height="tableHeight"
-      :size="tableSize"
-      :border="resizable"
-      @header-dragend="handleHeaderDragEnd"
-    >
-      <el-table-column
-        v-for="column in columnsData"
-        :key="column.name"
-        :prop="column.name"
-        :label="column.title"
-        :sortable="column.sortable"
-        :sort-method="getSortMethod(column)"
-        :width="column.width || 'auto'"
-        :min-width="column.minWidth || ''"
-        :fixed="column.fixed || false"
+    <div :key="version">
+      <el-table
+          v-loading="loading"
+          :data="listDisplay"
+          :class="tableClassNames"
+          :height="tableHeight"
+          :size="tableSize"
+          :border="resizable"
+          @header-dragend="handleHeaderDragEnd"
       >
-        <template
-          slot-scope="scope"
+        <el-table-column
+            v-for="column in columnsData"
+            :key="column.name"
+            :prop="column.name"
+            :label="column.title"
+            :sortable="column.sortable"
+            :sort-method="getSortMethod(column)"
+            :width="column.width || 'auto'"
+            :min-width="column.minWidth || ''"
+            :fixed="column.fixed || false"
         >
-          <slot
-            :name="`column-${column.name}`"
-            v-bind="scope"
+          <template
+              slot-scope="scope"
           >
-            <template v-if="column.type === 'date'">
-              {{formatDate(objGet(scope.row, column.name))}}
-            </template>
-            <template
-              v-else-if="column.type === 'price'"
+            <slot
+                :name="`column-${column.name}`"
+                v-bind="scope"
             >
-              {{column.getData(scope.row, column).label}}
-              <i
-                v-if="column.getData(scope.row, column).theme !== 'primary'"
-                :class="getPriceIcon(scope.row, column)"
-              />
-            </template>
-            <router-link
-                v-else-if="column.type === 'link'"
-                :to="column.getLink(scope.row)"
-            >
-              {{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}
-            </router-link>
-            <el-link
-              v-else-if="column.type === 'a-link'"
-              :href="column.getLink(scope.row)"
-              target="_blank"
-            >
-              {{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}
-            </el-link>
-            <el-tag
-                v-else-if="column.type === 'tag'"
-                disable-transitions
-            >
-              {{column.getData && column.getData(scope.row) || getOptionsValue(scope.row, column)}}
-            </el-tag>
-            <div v-else-if="column.type === 'tags'">
-              <el-tag
-                v-for="value in column.getData(scope.row)"
-                :key="value"
-                :type="objGet(column.themes, value, 'primary')"
-                disable-transitions
+              <template v-if="column.type === 'date'">
+                {{formatDate(objGet(scope.row, column.name))}}
+              </template>
+              <template
+                  v-else-if="column.type === 'price'"
               >
-                {{objGet(column.options || {}, value, value)}}
+                {{column.getData(scope.row, column).label}}
+                <i
+                    v-if="column.getData(scope.row, column).theme !== 'primary'"
+                    :class="getPriceIcon(scope.row, column)"
+                />
+              </template>
+              <router-link
+                  v-else-if="column.type === 'link'"
+                  :to="column.getLink(scope.row)"
+              >
+                {{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}
+              </router-link>
+              <el-link
+                  v-else-if="column.type === 'a-link'"
+                  :href="column.getLink(scope.row)"
+                  target="_blank"
+              >
+                {{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}
+              </el-link>
+              <el-tag
+                  v-else-if="column.type === 'tag'"
+                  disable-transitions
+              >
+                {{column.getData && column.getData(scope.row) || getOptionsValue(scope.row, column)}}
               </el-tag>
-            </div>
-            <pre v-else-if="column.type === 'pre'" :class="column.className || ''">{{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}</pre>
-            <div v-else-if="column.type === 'thumbnail'">
-              <el-image
-                style="width: 80px; height: 80px; border-radius: 5px; overflow: hidden;"
-                :src="objGet(scope.row, column.name)"
-                fit="cover"
-                lazy
-              />
-            </div>
-            <template v-else>
-              {{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}
-            </template>
-          </slot>
-        </template>
-      </el-table-column>
-      <el-table-column
-        v-if="crudActions"
-        :prop="primaryKeyNameData"
-        :label="$t('listTable.columns.action')"
-        :min-width="180"
+              <div v-else-if="column.type === 'tags'">
+                <el-tag
+                    v-for="value in column.getData(scope.row)"
+                    :key="value"
+                    :type="objGet(column.themes, value, 'primary')"
+                    disable-transitions
+                >
+                  {{objGet(column.options || {}, value, value)}}
+                </el-tag>
+              </div>
+              <pre v-else-if="column.type === 'pre'" :class="column.className || ''">{{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}</pre>
+              <div v-else-if="column.type === 'thumbnail'">
+                <el-image
+                    style="width: 80px; height: 80px; border-radius: 5px; overflow: hidden;"
+                    :src="objGet(scope.row, column.name)"
+                    fit="cover"
+                    lazy
+                />
+              </div>
+              <template v-else>
+                {{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}
+              </template>
+            </slot>
+          </template>
+        </el-table-column>
+        <el-table-column
+            v-if="crudActions"
+            :prop="primaryKeyNameData"
+            :label="$t('listTable.columns.action')"
+            :min-width="180"
+        >
+          <template slot-scope="scope">
+            <admin-actions
+                :base-route="baseRouteData"
+                :id="scope.row[primaryKeyNameData]"
+                :viewAction="viewAction"
+                :editAction="editAction"
+                :deleteAction="deleteAction"
+                :gen-links="genLinks"
+            />
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[10, 15, 20, 50, 100]"
+          :page-size="10"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="listFiltered.length"
+          style="text-align: center; margin-top: 8px;"
       >
-        <template slot-scope="scope">
-          <admin-actions
-            :base-route="baseRouteData"
-            :id="scope.row[primaryKeyNameData]"
-            :viewAction="viewAction"
-            :editAction="editAction"
-            :deleteAction="deleteAction"
-            :gen-links="genLinks"
-          />
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10, 15, 20, 50, 100]"
-      :page-size="10"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="listFiltered.length"
-      style="text-align: center; margin-top: 8px;"
-    >
-    </el-pagination>
+      </el-pagination>
+    </div>
   </div>
 </template>
 

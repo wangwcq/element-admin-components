@@ -15,11 +15,11 @@ const ElementAdminComponents = {
       apiBase: '/api/admin',
       apiUpload: '/api/upload',
       appTitleKey: 'Admin',
+      urlBase: '',
+      messages: {},
     }, userOptions);
 
-    const {
-      ...ctx
-    } = options;
+    const options = _.omit(ctx, ['messages']);
 
     Vue.directive('click-outside', ClickOutside);
 
