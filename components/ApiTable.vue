@@ -211,7 +211,6 @@ export default {
     },
   },
   mounted() {
-    this.baseRouteData = this.baseRoute || this.$route.path;
     this.loadData();
   },
   watch: {
@@ -225,6 +224,7 @@ export default {
   methods: {
     async loadData() {
       this.loading = true;
+      this.baseRouteData = this.baseRoute || this.$route.path;
       if (!this.api) {
         this.loading = false;
         this.list = [];
