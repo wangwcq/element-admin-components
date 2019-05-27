@@ -19,7 +19,7 @@ const ElementAdminComponents = {
       messages: {},
     }, userOptions);
 
-    const options = _.omit(ctx, ['messages']);
+    const ctx = _.omit(options, ['messages']);
 
     Vue.directive('click-outside', ClickOutside);
 
