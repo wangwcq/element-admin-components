@@ -4,7 +4,7 @@
       :value="value"
       placeholder="Please select..."
       @input="updateValue"
-      filterable
+      :filterable="filterable"
       clearable
       :disabled="disabled"
     >
@@ -40,6 +40,7 @@ export default {
     fieldTitle: { type: String, default: 'title' },
     disabled: { type: Boolean, default: false },
     showCount: { type: Boolean, default: false },
+    filterable: { type: Boolean, default: true },
   },
   emit: ['input'],
   data() {

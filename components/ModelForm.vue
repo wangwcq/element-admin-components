@@ -90,6 +90,7 @@
             v-model="model[field.name]"
             :disabled="field.disabled"
             :show-count="field.showCount || false"
+            :filterable="defaultValue(field.filterable, true)"
           />
           <el-select
             v-else-if="field.type === 'select'"
@@ -212,6 +213,9 @@ export default {
       return false;
     },
     cloneDeep: _.cloneDeep,
+    defaultValue(value, dValue) {
+      return _.isUndefined(value) ? dValue : value;
+    },
   },
 };
 </script>
