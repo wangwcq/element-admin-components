@@ -1,6 +1,6 @@
 {
   "name": "@wangwcq/element-admin-components",
-  "version": "2.11.1",
+  "version": "2.11.2",
   "private": true,
   "scripts": {
     "dev": "nodemon --watch langs/i18n.csv --watch dev/langs/i18n.csv dev/i18n.js & vue serve dev/main.js --open",
