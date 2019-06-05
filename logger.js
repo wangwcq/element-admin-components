@@ -1,13 +1,20 @@
+const _ = require('lodash');
 const pino = require('pino');
 
-let commonLoggerDest = null;
+let loggerConfig = {
+  dest: null,
+  app: null,
+};
 
-module.exports = (name, loggerDest = null) => {
+module.exports = (name, config) => {
+  const vConfig = _.merge({
+    dest: null,
+  }, config);
   let pinoDestination = undefined;
-  if (loggerDest) {
-    pinoDestination = pino.destination(loggerDest);
-  } else if (commonLoggerDest) {
-    pinoDestination = pino.destination(commonLoggerDest);
+  if (vConfig.dest) {
+    pinoDestination = pino.destination(vConfig.dest);
+  } else if (loggerConfig.dest) {
+    pinoDestination = pino.destination(loggerConfig.dest);
   }
   return pino({
     name,
@@ -21,8 +28,6 @@ module.exports = (name, loggerDest = null) => {
 };
 
 module.exports.init = (config = {}) => {
-  const {
-    dest = null,
-  } = config;
-  commonLoggerDest = dest;
+  const vConfig = _.merge({}, loggerConfig, config);
+  loggerConfig = vConfig;
 };
