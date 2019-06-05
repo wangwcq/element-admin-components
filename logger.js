@@ -9,6 +9,7 @@ let loggerConfig = {
 module.exports = (name, config) => {
   const vConfig = _.merge({
     dest: null,
+    respectAppDebug: true,
   }, config);
   let pinoDestination = undefined;
   if (vConfig.dest) {
@@ -16,7 +17,8 @@ module.exports = (name, config) => {
   } else if (loggerConfig.dest) {
     pinoDestination = pino.destination(loggerConfig.dest);
   }
-  return pino({
+
+  const ret = pino({
     name,
     prettyPrint: {
       translateTime: 'SYS:standard',
@@ -25,6 +27,13 @@ module.exports = (name, config) => {
       prettyPrint: false,
     } : {}),
   }, pinoDestination);
+  ret.debug = true;
+  if (vConfig.respectAppDebug) {
+    if (loggerConfig.app && !loggerConfig.app.debug) {
+      ret.debug = false;
+    }
+  }
+  return ret;
 };
 
 module.exports.init = (config = {}) => {
