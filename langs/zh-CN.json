@@ -17,6 +17,10 @@
   "modelForm": {
     "buttons": {
       "save": "保存"
+    },
+    "repeated": {
+      "add": "添加",
+      "delete": "删除"
     }
   }
 }

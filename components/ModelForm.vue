@@ -123,17 +123,24 @@
               label="x"
             >
               <div slot="label">
-                <el-tooltip>
-                  <div slot="content">
-                    <el-link type="danger" @click="() => model[field.name].splice(mIndex, 1)">
-                      <i class="el-icon-delete-solid" />
-                      Delete
-                    </el-link>
-                  </div>
+                <template v-if="field.disableDelete">
                   <el-button type="text">
                     {{`${field.title} ${mIndex + 1}`}}
                   </el-button>
-                </el-tooltip>
+                </template>
+                <template v-else>
+                  <el-tooltip>
+                    <div slot="content">
+                      <el-link type="danger" @click="() => model[field.name].splice(mIndex, 1)">
+                        <i class="el-icon-delete-solid" />
+                        {{$t('modelForm.repeated.delete')}}
+                      </el-link>
+                    </div>
+                    <el-button type="text">
+                      {{`${field.title} ${mIndex + 1}`}}
+                    </el-button>
+                  </el-tooltip>
+                </template>
               </div>
               <model-form
                 :model="m"
@@ -142,12 +149,13 @@
               />
             </el-form-item>
             <el-button
+              v-if="!field.disableAdd"
               icon="el-icon-circle-plus-outline"
               type="primary"
               plain
               @click="() => model[field.name].push(cloneDeep(field.defaultValues))"
             >
-              Add {{field.title}}
+              {{$t('modelForm.repeated.add')}} {{field.title}}
             </el-button>
           </div>
         </slot>

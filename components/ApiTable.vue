@@ -322,7 +322,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   .el-table.table-full-width {
     width: 100%;
   }

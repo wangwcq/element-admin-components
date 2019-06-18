@@ -17,6 +17,10 @@
   "modelForm": {
     "buttons": {
       "save": "Save"
+    },
+    "repeated": {
+      "add": "Add ",
+      "delete": "Delete"
     }
   }
 }

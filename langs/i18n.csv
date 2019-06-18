@@ -7,3 +7,5 @@ listTable.buttons.view,View,查看
 listTable.buttons.links,Links,相关链接
 uploadComponent.hint,Click or drag files here to upload,点击此处或拖入文件上传
 modelForm.buttons.save,Save,保存
+modelForm.repeated.add,Add ,添加
+modelForm.repeated.delete,Delete,删除
