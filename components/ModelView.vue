@@ -19,7 +19,7 @@
               <reference-view
                   v-else-if="field.type === 'reference'"
                   :model="field.reference"
-                  :value="model[field.name]"
+                  :value="objGet(model, field.name)"
                   :field-title="field.fieldTitle"
                   :do-link-to-entities="doLinkToEntities && field.link"
               ></reference-view>
@@ -34,12 +34,12 @@
               </template>
               <pre
                   v-else-if="field.type === 'text' || field.type === 'pre'"
-                  v-html="model[field.name]"
+                  v-html="objGet(model, field.name)"
                   :class="field.className"
               ></pre>
               <div
                   v-else-if="field.type === 'htmleditor'"
-                  v-html="model[field.name]"
+                  v-html="objGet(model, field.name)"
                   :class="field.className"
               ></div>
               <el-tag
@@ -51,7 +51,7 @@
                 {{getOptionsValue(model, field)}}
               </el-tag>
               <template v-else-if="field.type === 'custom'">
-                {{(field.getData && field.getData(model)) || model[field.name] || empty}}
+                {{(field.getData && field.getData(model)) || objGet(model, field.name) || empty}}
               </template>
               <el-link
                   v-else-if="field.type === 'thumbnail'"
@@ -67,7 +67,7 @@
                 />
               </el-link>
               <template v-else>
-                {{model[field.name] || empty}}
+                {{(field.getData && field.getData(model)) || objGet(model, field.name) || empty}}
               </template>
             </slot>
           </div>
