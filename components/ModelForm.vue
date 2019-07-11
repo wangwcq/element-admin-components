@@ -110,6 +110,10 @@
               :value="value"
             />
           </el-select>
+          <el-switch
+              v-else-if="field.type === 'switch'"
+              v-model="model[field.name]"
+          />
           <admin-editor
               v-else-if="field.type === 'htmleditor'"
               v-model="model[field.name]"
