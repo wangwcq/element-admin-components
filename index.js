@@ -6,6 +6,7 @@ import VueI18n from 'vue-i18n';
 
 import PageTitle from './components/PageTitle';
 import ApiTable from './components/ApiTable';
+import ApiPagedTable from "./components/ApiPagedTable";
 import ModelForm from './components/ModelForm';
 import ModelView from './components/ModelView';
 
@@ -25,6 +26,7 @@ const ElementAdminComponents = {
 
     Vue.component('page-title', PageTitle);
     Vue.component('api-table', ApiTable);
+    Vue.component('api-paged-table', ApiPagedTable);
     Vue.component('model-form', ModelForm);
     Vue.component('model-view', ModelView);
 

@@ -5,10 +5,10 @@
         <slot />
       </div>
       <div>
-        <div class="text-right">
+        <div class="text-right" v-if="vSearchFields">
           <el-select v-model="searchField" placeholder="Search in..." style="width: 120px">
             <el-option
-              v-for="column in columnsData"
+              v-for="column in vSearchFields"
               :key="column.key"
               :label="column.title"
               :value="column.name"
@@ -20,6 +20,7 @@
             style="width: 200px"
             placeholder="Type to search..."
           />
+          <el-button type="primary" @click="loadData" icon="el-icon-search" />
         </div>
       </div>
     </el-row>
@@ -92,7 +93,10 @@
                   {{objGet(column.options || {}, value, value)}}
                 </el-tag>
               </div>
-              <pre v-else-if="column.type === 'pre'" :class="column.className || ''">{{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}</pre>
+              <pre
+                  v-else-if="column.type === 'pre'"
+                  :class="column.className || ''"
+              >{{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}</pre>
               <div v-else-if="column.type === 'thumbnail'">
                 <el-image
                     style="width: 80px; height: 80px; border-radius: 5px; overflow: hidden;"
@@ -126,13 +130,11 @@
         </el-table-column>
       </el-table>
       <el-pagination
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="vCurrentPage"
-          :page-sizes="[10, 15, 20, 50, 100]"
-          :page-size="10"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="listFiltered.length"
+          :page-size="20"
+          layout="total, prev, pager, next, jumper"
+          :total="total"
           style="text-align: center; margin-top: 8px;"
       >
       </el-pagination>
@@ -169,12 +171,14 @@ export default {
     transformListData: { type: Function, default: x => x },
     currentPage: { type: Number, default: 1 },
     singlePage: { type: Number, default: 10 },
+    searchFields: { type: Array },
   },
   data() {
     // eslint-disable-next-line no-nested-ternary
     const defaultSortMethod = ((a, b) => ((String(a) === String(b) ? 0 : (a < b ? -1 : 1))));
     return {
       list: [],
+      total: 0,
       columnsData: [],
       baseRouteData: '',
       loading: false,
@@ -185,29 +189,18 @@ export default {
       defaultSortMethod,
       vSinglePage: this.singlePage,
       vCurrentPage: this.currentPage,
+      vSearchFields: this.searchFields,
     };
   },
   computed: {
     listFiltered() {
-      if (!this.searchStr || !this.searchField) {
-        return this.list;
-      }
-      if (!this.searchStr.trim()) {
-        return _.filter(this.list, x => !_.toString(_.get(x, this.searchField).toLowerCase()));
-      }
-      return _.filter(
-        this.list,
-        x => _.toString(_.get(x, this.searchField)).toLowerCase()
-          .indexOf(this.searchStr.toLowerCase()) !== -1,
-      );
+      return this.list;
     },
     vTotalPages() {
       return _.ceil(this.listFiltered.length / (this.vSinglePage || 1));
     },
     listDisplay() {
-      const start = (this.vCurrentPage - 1) * this.vSinglePage;
-      const end = start + this.vSinglePage;
-      return this.listFiltered.slice(start, end);
+      return this.listFiltered;
     },
   },
   mounted() {
@@ -219,7 +212,7 @@ export default {
     },
     singlePage(next) { this.vSinglePage = next; },
     currentPage(next) { this.vCurrentPage = next; },
-    listFiltered() { this.vCurrentPage = 1; },
+    vCurrentPage() { this.loadData(); },
   },
   methods: {
     async loadData() {
@@ -231,17 +224,28 @@ export default {
         return;
       }
       let listRes = [];
+      const apiBody = {
+        ...this.apiBody,
+        page: this.vCurrentPage,
+      };
+      if (this.searchStr && this.searchStr.trim()) {
+        apiBody[this.searchField] = this.searchStr;
+      }
       if (this.apiMethod === 'get') {
-        listRes = await this.$axios.get(this.api);
+        listRes = await this.$axios.get(this.api, {
+          params: apiBody,
+        });
       } else {
-        listRes = await this.$axios.post(this.api, this.apiBody);
+        listRes = await this.$axios.post(this.api, apiBody);
       }
       listRes = listRes.data;
       if (listRes.code === 0) {
         this.list = listRes.data;
+        this.total = listRes.total;
       } else {
         this.list = [];
-        // toast error message
+        this.total = 0;
+        // todo toast error message
       }
       this.loading = false;
       this.list = this.transformListData(this.list);
@@ -261,6 +265,7 @@ export default {
         }
         this.primaryKeyNameData = this.primaryKeyName || this.columnsData[0].name;
         this.columnsData = _.filter(this.columnsData, x => x.type !== 'hidden');
+        if (!this.searchFields) this.vSearchFields = this.columnsData;
       }
     },
     objGet: _.get,
