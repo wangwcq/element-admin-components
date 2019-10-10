@@ -20,7 +20,7 @@
             style="width: 200px"
             placeholder="Type to search..."
           />
-          <el-button type="primary" @click="loadData" icon="el-icon-search" />
+          <el-button type="primary" @click="triggerSearch" icon="el-icon-search" />
         </div>
       </div>
     </el-row>
@@ -33,10 +33,11 @@
           :size="tableSize"
           :border="resizable"
           @header-dragend="handleHeaderDragEnd"
+          @sort-change="handleSortChange"
       >
         <el-table-column
             v-for="column in columnsData"
-            :key="column.name"
+            :key="column.key || column.name"
             :prop="column.name"
             :label="column.title"
             :sortable="column.sortable"
@@ -99,11 +100,19 @@
               >{{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}</pre>
               <div v-else-if="column.type === 'thumbnail'">
                 <el-image
-                    style="width: 80px; height: 80px; border-radius: 5px; overflow: hidden;"
+                    :style="{
+                      width: '80px',
+                      height: '80px',
+                      borderRadius: '5px',
+                      overflow: 'hidden',
+                      ...(column.imageStyle || {}),
+                    }"
                     :src="objGet(scope.row, column.name)"
                     fit="cover"
                     lazy
-                />
+                >
+                  <div slot="error" class="el-image__error">{{ column.errorText || 'ERROR' }}</div>
+                </el-image>
               </div>
               <template v-else>
                 {{column.getData && column.getData(scope.row) || objGet(scope.row, column.name)}}
@@ -136,8 +145,7 @@
           layout="total, prev, pager, next, jumper"
           :total="total"
           style="text-align: center; margin-top: 8px;"
-      >
-      </el-pagination>
+      />
     </div>
   </div>
 </template>
@@ -188,7 +196,7 @@ export default {
       colWidth: {},
       defaultSortMethod,
       vSinglePage: this.singlePage,
-      vCurrentPage: this.currentPage,
+      vCurrentPage: Number(this.$route.query.page || this.currentPage),
       vSearchFields: this.searchFields,
     };
   },
@@ -212,7 +220,17 @@ export default {
     },
     singlePage(next) { this.vSinglePage = next; },
     currentPage(next) { this.vCurrentPage = next; },
-    vCurrentPage() { this.loadData(); },
+    vCurrentPage(next, before) {
+      if (next === before) return;
+      this.$router.replace({
+        path: this.$route.path,
+        query: { page: next },
+      });
+      this.loadData();
+    },
+    $route(next) {
+      this.vCurrentPage = Number(next.query.page || 1);
+    },
   },
   methods: {
     async loadData() {
@@ -228,8 +246,15 @@ export default {
         ...this.apiBody,
         page: this.vCurrentPage,
       };
-      if (this.searchStr && this.searchStr.trim()) {
-        apiBody[this.searchField] = this.searchStr;
+      if (this.searchField && this.searchStr && this.searchStr.trim()) {
+        const searchField = _.find(this.vSearchFields, field => field.name === this.searchField);
+        if (searchField) {
+          if (searchField.searchExact || false) {
+            apiBody[this.searchField] = this.searchStr;
+          } else {
+            apiBody[this.searchField] = `LIKE_${this.searchStr}`;
+          }
+        }
       }
       if (this.apiMethod === 'get') {
         listRes = await this.$axios.get(this.api, {
@@ -322,6 +347,22 @@ export default {
     },
     handleCurrentChange(v) {
       this.vCurrentPage = v;
+    },
+    handleSortChange({ prop, order }) {
+      const orderMethods = {
+        ascending: 'asc',
+        descending: 'desc',
+      };
+      this.apiBody._sortBy = prop;
+      this.apiBody._sortDir = _.get(orderMethods, order, 'asc');
+      this.loadData();
+    },
+    triggerSearch() {
+      if (this.vCurrentPage === 1) {
+        this.loadData();
+      } else {
+        this.vCurrentPage = 1; // watcher will trigger loadData
+      }
     },
   },
 };
