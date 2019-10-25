@@ -198,6 +198,9 @@ export default {
       vSinglePage: this.singlePage,
       vCurrentPage: Number(this.$route.query.page || this.currentPage),
       vSearchFields: this.searchFields,
+      vApiBody: {
+        ..._.get(this.$route, 'meta.apiBody'),
+      },
     };
   },
   computed: {
@@ -234,6 +237,10 @@ export default {
   },
   methods: {
     async loadData() {
+      this.vApiBody = {
+        ...this.vApiBody,
+        ...this.apiBody,
+      };
       this.loading = true;
       this.baseRouteData = this.baseRoute || this.$route.path;
       if (!this.api) {
@@ -243,7 +250,7 @@ export default {
       }
       let listRes = [];
       const apiBody = {
-        ...this.apiBody,
+        ...this.vApiBody,
         page: this.vCurrentPage,
       };
       if (this.searchField && this.searchStr && this.searchStr.trim()) {
@@ -353,8 +360,14 @@ export default {
         ascending: 'asc',
         descending: 'desc',
       };
-      this.apiBody._sortBy = prop;
-      this.apiBody._sortDir = _.get(orderMethods, order, 'asc');
+      this.vApiBody._sortBy = prop;
+      this.vApiBody._sortDir = _.get(orderMethods, order, 'asc');
+      _.set(this.$route, 'meta.apiBody', {
+        ..._.get(this.$route, 'meta.apiBody', {}),
+        _sortBy: this.vApiBody._sortBy,
+        _sortDir: this.vApiBody._sortDir,
+      });
+      console.log(this.$route.meta);
       this.loadData();
     },
     triggerSearch() {
