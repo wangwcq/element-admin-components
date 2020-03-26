@@ -8,17 +8,17 @@
         <div class="text-right">
           <el-select v-model="searchField" placeholder="Search in..." style="width: 120px">
             <el-option
-              v-for="column in columnsData"
-              :key="column.key"
-              :label="column.title"
-              :value="column.name"
+                v-for="column in columnsData"
+                :key="column.key"
+                :label="column.title"
+                :value="column.name"
             />
           </el-select>
           <el-input
-            type="search"
-            v-model="searchStr"
-            style="width: 200px"
-            placeholder="Type to search..."
+              type="search"
+              v-model="searchStr"
+              style="width: 200px"
+              placeholder="Type to search..."
           />
         </div>
       </div>
@@ -132,7 +132,7 @@
           :page-sizes="[10, 15, 20, 50, 100]"
           :page-size="10"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="listFiltered.length"
+          :total="vTotal"
           style="text-align: center; margin-top: 8px;"
       >
       </el-pagination>
@@ -141,185 +141,238 @@
 </template>
 
 <script>
-import _ from 'lodash';
-import CSVExporter from 'browser-csv-exporter';
-import AdminActions from './AdminActions.vue';
+  import _ from 'lodash';
+  import CSVExporter from 'browser-csv-exporter';
+  import AdminActions from './AdminActions.vue';
 
-export default {
-  name: 'ApiTable',
-  components: { AdminActions },
-  props: {
-    api: { type: String },
-    apiMethod: { type: String, default: 'get' },
-    apiBody: { type: Object, default: () => ({}) },
-    tableClassNames: { type: Array, default: () => ['table-full-width'] },
-    columns: { type: Array, default: () => [] },
-    primaryKeyName: { type: String, default: '' },
-    baseRoute: { type: String, default: '' },
-    crudActions: { type: Boolean, default: true },
-    version: { type: Number, default: 0 },
-    viewAction: { type: String, default: '' },
-    editAction: { type: String, default: 'edit' },
-    deleteAction: { type: String, default: 'delete' },
-    tableHeight: { type: [String], default: undefined },
-    tableSize: { type: String, default: 'medium' },
-    inlineSearch: { type: Boolean, default: true },
-    genLinks: { type: Function, default: () => () => [] },
-    resizable: { type: Boolean, default: false },
-    transformListData: { type: Function, default: x => x },
-    currentPage: { type: Number, default: 1 },
-    singlePage: { type: Number, default: 10 },
-  },
-  data() {
-    // eslint-disable-next-line no-nested-ternary
-    const defaultSortMethod = ((a, b) => ((String(a) === String(b) ? 0 : (a < b ? -1 : 1))));
-    return {
-      list: [],
-      columnsData: [],
-      baseRouteData: '',
-      loading: false,
-      primaryKeyNameData: '',
-      searchField: '',
-      searchStr: '',
-      colWidth: {},
-      defaultSortMethod,
-      vSinglePage: this.singlePage,
-      vCurrentPage: this.currentPage,
-    };
-  },
-  computed: {
-    listFiltered() {
-      if (!this.searchStr || !this.searchField) {
-        return this.list;
-      }
-      if (!this.searchStr.trim()) {
-        return _.filter(this.list, x => !_.toString(_.get(x, this.searchField).toLowerCase()));
-      }
-      return _.filter(
-        this.list,
-        x => _.toString(_.get(x, this.searchField)).toLowerCase()
-          .indexOf(this.searchStr.toLowerCase()) !== -1,
-      );
+  export default {
+    name: 'ApiTable',
+    components: { AdminActions },
+    props: {
+      api: { type: String },
+      apiMethod: { type: String, default: 'get' },
+      apiBody: { type: Object, default: () => ({}) },
+      tableClassNames: { type: Array, default: () => ['table-full-width'] },
+      columns: { type: Array, default: () => [] },
+      primaryKeyName: { type: String, default: '' },
+      baseRoute: { type: String, default: '' },
+      crudActions: { type: Boolean, default: true },
+      version: { type: Number, default: 0 },
+      viewAction: { type: String, default: '' },
+      editAction: { type: String, default: 'edit' },
+      deleteAction: { type: String, default: 'delete' },
+      tableHeight: { type: [String], default: undefined },
+      tableSize: { type: String, default: 'medium' },
+      inlineSearch: { type: Boolean, default: true },
+      genLinks: { type: Function, default: () => () => [] },
+      resizable: { type: Boolean, default: false },
+      transformListData: { type: Function, default: x => x },
+      currentPage: { type: Number, default: 1 },
+      singlePage: { type: Number, default: 10 },
+      paginationMethod: { type: String, default: 'front-end' }, // front-end, back-end
     },
-    vTotalPages() {
-      return _.ceil(this.listFiltered.length / (this.vSinglePage || 1));
+    data() {
+      // eslint-disable-next-line no-nested-ternary
+      const defaultSortMethod = ((a, b) => ((String(a) === String(b) ? 0 : (a < b ? -1 : 1))));
+      return {
+        list: [],
+        columnsData: [],
+        baseRouteData: '',
+        loading: false,
+        primaryKeyNameData: '',
+        searchField: '',
+        searchStr: '',
+        colWidth: {},
+        defaultSortMethod,
+        vSinglePage: this.singlePage,
+        vCurrentPage: this.currentPage,
+        total: 0,
+        triggerSearchStrChangeDebounced: _.debounce(this.triggerSearchStrChange, 500),
+      };
     },
-    listDisplay() {
-      const start = (this.vCurrentPage - 1) * this.vSinglePage;
-      const end = start + this.vSinglePage;
-      return this.listFiltered.slice(start, end);
+    computed: {
+      listFiltered() {
+        if (this.paginationMethod === 'back-end') {
+          return this.list;
+        }
+        if (!this.searchStr || !this.searchField) {
+          return this.list;
+        }
+        if (!this.searchStr.trim()) {
+          return _.filter(this.list, x => !_.toString(_.get(x, this.searchField).toLowerCase()));
+        }
+        return _.filter(
+          this.list,
+          x => _.toString(_.get(x, this.searchField)).toLowerCase()
+            .indexOf(this.searchStr.toLowerCase()) !== -1,
+        );
+      },
+      vTotalPages() {
+        return _.ceil(this.listFiltered.length / (this.vSinglePage || 1));
+      },
+      vTotal() {
+        if (this.paginationMethod === 'back-end') { return this.total; }
+        return this.listFiltered.length;
+      },
+      listDisplay() {
+        if (this.paginationMethod === 'back-end') {
+          return this.list;
+        }
+        const start = (this.vCurrentPage - 1) * this.vSinglePage;
+        const end = start + this.vSinglePage;
+        return this.listFiltered.slice(start, end);
+      },
     },
-  },
-  mounted() {
-    this.loadData();
-  },
-  watch: {
-    version() {
+    mounted() {
       this.loadData();
     },
-    singlePage(next) { this.vSinglePage = next; },
-    currentPage(next) { this.vCurrentPage = next; },
-    listFiltered() { this.vCurrentPage = 1; },
-  },
-  methods: {
-    async loadData() {
-      this.loading = true;
-      this.baseRouteData = this.baseRoute || this.$route.path;
-      if (!this.api) {
-        this.loading = false;
-        this.list = [];
-        return;
-      }
-      let listRes = [];
-      if (this.apiMethod === 'get') {
-        listRes = await this.$axios.get(this.api);
-      } else {
-        listRes = await this.$axios.post(this.api, this.apiBody);
-      }
-      listRes = listRes.data;
-      if (listRes.code === 0) {
-        this.list = listRes.data;
-      } else {
-        this.list = [];
-        // toast error message
-      }
-      this.loading = false;
-      this.list = this.transformListData(this.list);
-      if (this.list.length) {
-        if (_.isEmpty(this.columns)) {
-          const columns = _.map(_.keys(_.first(this.list)), x => ({
-            name: x,
-            title: _.startCase(x),
-            sortable: true,
-            resizable: this.resizable,
-          }));
-          this.columnsData = columns;
-        } else {
-          this.columnsData = _.map(this.columns, x => _.extend({}, {
-            sortable: true,
-          }, x));
+    watch: {
+      version() {
+        this.loadData();
+      },
+      singlePage(next) {
+        this.vSinglePage = next;
+      },
+      currentPage(next) {
+        this.vCurrentPage = next;
+      },
+      listFiltered() {
+        if (this.paginationMethod !== 'back-end') {
+          this.vCurrentPage = 1;
         }
-        this.primaryKeyNameData = this.primaryKeyName || this.columnsData[0].name;
-        this.columnsData = _.filter(this.columnsData, x => x.type !== 'hidden');
-      }
+      },
+      searchField() {
+        if (this.paginationMethod === 'back-end') {
+          this.vCurrentPage = 1;
+          this.loadData();
+        }
+      },
+      searchStr() {
+        this.triggerSearchStrChangeDebounced();
+      },
     },
-    objGet: _.get,
-    handleHeaderDragEnd(newWidth, oldWidth, column) {
-      this.colWidth[column.property] = newWidth;
-    },
-    getOptionsValue(row, column) {
-      return _.get(column.options || {}, _.get(row, column.name), _.get(row, column.name));
-    },
-    getPriceIcon(row, column) {
-      return [
-        'el-link',
-        `el-link--${column.getData(row, column).theme}`,
-        column.getData(row, column).theme === 'warning'
-          ? 'el-icon-warning-outline'
-          : 'el-icon-remove-outline',
-      ];
-    },
-    getSortMethod(column) {
-      return (column.sortMethod && column.sortMethod(this.defaultSortMethod, column))
-        || this.defaultSortMethod;
-    },
-    downloadCsv() {
-      if (this.loading) {
-        this.$message({
-          message: 'Data is loading, please wait',
-          type: 'error',
+    methods: {
+      async loadData() {
+        this.loading = true;
+        this.baseRouteData = this.baseRoute || this.$route.path;
+        if (!this.api) {
+          this.loading = false;
+          this.list = [];
+          return;
+        }
+        let listRes = [];
+        let apiBodyPaginationBackend = {};
+        if (this.paginationMethod === 'back-end') {
+          apiBodyPaginationBackend._field = this.searchField;
+          apiBodyPaginationBackend._keyword = this.searchStr;
+          apiBodyPaginationBackend._pageSize = this.vSinglePage;
+          apiBodyPaginationBackend._page = this.vCurrentPage;
+        }
+        if (this.apiMethod === 'get') {
+          listRes = await this.$axios.get(this.api);
+        } else {
+          listRes = await this.$axios.post(this.api, {
+            ...this.apiBody,
+            ...apiBodyPaginationBackend,
+          });
+        }
+        listRes = listRes.data;
+        if (listRes.code === 0) {
+          this.list = listRes.data;
+          this.total = listRes.total;
+        } else {
+          this.list = [];
+          // toast error message
+        }
+        this.loading = false;
+        this.list = this.transformListData(this.list);
+        if (this.list.length) {
+          if (_.isEmpty(this.columns)) {
+            const columns = _.map(_.keys(_.first(this.list)), x => ({
+              name: x,
+              title: _.startCase(x),
+              sortable: true,
+              resizable: this.resizable,
+            }));
+            this.columnsData = columns;
+          } else {
+            this.columnsData = _.map(this.columns, x => _.extend({}, {
+              sortable: true,
+            }, x));
+          }
+          this.primaryKeyNameData = this.primaryKeyName || this.columnsData[0].name;
+          this.columnsData = _.filter(this.columnsData, x => x.type !== 'hidden');
+        }
+      },
+      objGet: _.get,
+      handleHeaderDragEnd(newWidth, oldWidth, column) {
+        this.colWidth[column.property] = newWidth;
+      },
+      getOptionsValue(row, column) {
+        return _.get(column.options || {}, _.get(row, column.name), _.get(row, column.name));
+      },
+      getPriceIcon(row, column) {
+        return [
+          'el-link',
+          `el-link--${column.getData(row, column).theme}`,
+          column.getData(row, column).theme === 'warning'
+            ? 'el-icon-warning-outline'
+            : 'el-icon-remove-outline',
+        ];
+      },
+      getSortMethod(column) {
+        return (column.sortMethod && column.sortMethod(this.defaultSortMethod, column))
+          || this.defaultSortMethod;
+      },
+      downloadCsv() {
+        if (this.loading) {
+          this.$message({
+            message: 'Data is loading, please wait',
+            type: 'error',
+          });
+          return;
+        }
+        if (!this.listDisplay.length) {
+          this.$message({
+            message: 'Data is empty',
+            type: 'error',
+          });
+          return;
+        }
+        const columns = _.filter(_.map(_.first(this.listDisplay), (v, k) => {
+          if (typeof v === 'object') return null;
+          return {
+            key: k,
+            title: _.startCase(k),
+          };
+        }), Boolean);
+        const exporter = new CSVExporter({
+          fileName: `${this.$moment().format('YYYY-MM-DD')}`,
+          columns,
+          data: this.listFiltered,
         });
-        return;
-      }
-      if (!this.listDisplay.length) {
-        this.$message({
-          message: 'Data is empty',
-          type: 'error',
-        });
-        return;
-      }
-      const columns = _.filter(_.map(_.first(this.listDisplay), (v, k) => {
-        if (typeof v === 'object') return null;
-        return {
-          key: k,
-          title: _.startCase(k),
-        };
-      }), Boolean);
-      const exporter = new CSVExporter({
-        fileName: `${this.$moment().format('YYYY-MM-DD')}`,
-        columns,
-        data: this.listFiltered,
-      });
-      exporter.export();
+        exporter.export();
+      },
+      handleSizeChange(v) {
+        this.vSinglePage = v;
+        if (this.paginationMethod === 'back-end') {
+          this.loadData();
+        }
+      },
+      handleCurrentChange(v) {
+        this.vCurrentPage = v;
+        if (this.paginationMethod === 'back-end') {
+          this.loadData();
+        }
+      },
+      triggerSearchStrChange() {
+        if (this.paginationMethod === 'back-end') {
+          this.vCurrentPage = 1;
+          this.loadData();
+        }
+      },
     },
-    handleSizeChange(v) {
-      this.vSinglePage = v;
-    },
-    handleCurrentChange(v) {
-      this.vCurrentPage = v;
-    },
-  },
-};
+  };
 </script>
 
 <style lang="less" scoped>
