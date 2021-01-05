@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@vue/cli-service": "^3.7.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "axios-mock-adapter": "^1.16.0",
     "ckeditor": "^4",
     "d3-dsv": "^1.1.1",
